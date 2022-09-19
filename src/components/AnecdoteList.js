@@ -4,7 +4,13 @@ import { notify, removeNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
     const dispatch = useDispatch()
-    const anecdotes = useSelector(state => state.anecdotes)
+    const anecdotes = useSelector(state => {
+        if (state.filter == null) {
+            return state.anecdotes
+        }
+
+        return state.anecdotes.filter(item => item.content.toLowerCase().includes(state.filter.toLowerCase()))
+    })
 
     const handleVote = ({ content, id }) => {
         dispatch(notify(`Voted for '${content}'`))
