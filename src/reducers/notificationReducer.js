@@ -15,15 +15,17 @@ const notificationSlice = createSlice({
 
 export const { notify, removeNotification } = notificationSlice.actions
 
+
+let timeout // https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#setting_and_clearing_timeouts
 export const newNotification = (string, time) => {
     return async dispatch => {
         dispatch(notify(string))
 
-        if (time === null) {
-            dispatch(removeNotification())
+        if (timeout) {
+            clearTimeout(timeout)
         }
 
-        const timeout = setTimeout(() => {
+        timeout = setTimeout(() => {
             dispatch(removeNotification())
         }, time * 1000)
     }
