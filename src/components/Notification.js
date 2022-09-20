@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
 
 const Notification = (props) => {
-  const notificationToShow = () => {
-    console.log(props.notifications)
-    return props.notifications
-  }
+  const notificationToShow = () => props.notifications
+  console.log(notificationToShow())
 
   const style = {
     border: 'solid',
@@ -13,11 +11,17 @@ const Notification = (props) => {
     marginBlock: 5
   }
 
-  if (notificationToShow == null) {
+  if (notificationToShow() == null) {
     return null
   }
 
-  return <div style={style}>{notificationToShow}</div>
+  return <div style={style}>{notificationToShow()}</div>
+}
+
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications
+  }
 }
 
 const ConnectedNotification = connect(mapStateToProps)(Notification)
